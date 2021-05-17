@@ -520,7 +520,7 @@ void serviceInverter()
   if ((_lastRequestedCommand == "") && (_lastReceivedAt.compare(INVERTER_COMMAND_DELAY_MS) > 0) && (!_allMessagesUpdated))
   {
     if (_nextCommandNeeded == "") {
-      if (inverterType)  _nextCommandNeeded = "P003GS"; //IF MPI we start with that order
+      if (inverterType == 1 )  _nextCommandNeeded = "P003GS"; //IF MPI we start with that order
       else _nextCommandNeeded = "QPIGS";  //if PIP/PCM
     }
 
@@ -533,7 +533,7 @@ void serviceInverter()
     _lastRequestedCommand = _nextCommandNeeded;
     _lastRequestedAt.reset();
     Serial1.print(F("Sent Command: "));
-    if (inverterType) { Serial.print("^"); Serial1.print("^");}  //If MPI then prechar is needed
+    if (inverterType == 1) { Serial.print("^"); Serial1.print("^");}  //If MPI then prechar is needed
     Serial.print(_nextCommandNeeded);
     Serial1.println(_nextCommandNeeded);
     if (crc) Serial.print((char)((crc >> 8) & 0xFF)); //ONLY CRC fo PCM/PIP
